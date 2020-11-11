@@ -11,7 +11,6 @@ namespace Readly.Models
         public int Id { get; set; }
         public string Content { get; set; }
 
-        [Display(Name = "Post Date")]
         [DataType(DataType.Date)]
         public DateTime PostDate { get; set; }
     }
