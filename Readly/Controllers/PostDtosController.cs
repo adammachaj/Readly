@@ -19,11 +19,23 @@ namespace Readly.Controllers
             _context = context;
         }
 
+        [Route("posts")]
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+        public ActionResult Posts()
+        {
+            Console.WriteLine("yo");
+            Console.WriteLine(_context.Post.ToList());
+            return Json(_context.Post.ToList());
+        }
+
         // GET: PostDtos
         public async Task<IActionResult> Index()
         {
             return View(await _context.Post.ToListAsync());
         }
+
+        [Route("posts")]
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
 
         // GET: PostDtos/Details/5
         public async Task<IActionResult> Details(int? id)
