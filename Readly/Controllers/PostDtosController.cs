@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -19,12 +20,10 @@ namespace Readly.Controllers
             _context = context;
         }
 
+        // GET: GetPosts
         [Route("posts")]
-        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
-        public ActionResult Posts()
+        public ActionResult GetPosts()
         {
-            Console.WriteLine("yo");
-            Console.WriteLine(_context.Post.ToList());
             return Json(_context.Post.ToList());
         }
 
@@ -33,9 +32,6 @@ namespace Readly.Controllers
         {
             return View(await _context.Post.ToListAsync());
         }
-
-        [Route("posts")]
-        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
 
         // GET: PostDtos/Details/5
         public async Task<IActionResult> Details(int? id)
