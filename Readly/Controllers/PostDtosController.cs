@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,6 +21,7 @@ namespace Readly.Controllers
 
         // GET: GetPosts
         [Route("posts")]
+        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public ActionResult GetPosts()
         {
             return Json(_context.Post.ToList());
@@ -62,7 +62,7 @@ namespace Readly.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Content,Date")] PostDto postDto)
+        public async Task<IActionResult> Create([Bind("Id,Text,Author,PostDate")] PostDto postDto)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace Readly.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Content,Date")] PostDto postDto)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Text,Author,PostDate")] PostDto postDto)
         {
             if (id != postDto.Id)
             {

@@ -9,7 +9,8 @@ namespace Readly.Models
     public class PostDto
     {
         public int Id { get; set; }
-        public string Content { get; set; }
+        public string Text { get; set; }
+        public string Author { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime PostDate { get; set; }
