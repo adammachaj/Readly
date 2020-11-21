@@ -25,20 +25,23 @@ namespace Readly.Models
                 context.Post.AddRange(
                     new PostDto
                     {
-                        Content = "hejka",
-                        PostDate = DateTime.Now
+                        Text = "hejka",
+                        PostDate = DateTime.Now,
+                        Author = "AM"
                     },
 
                     new PostDto
                     {
-                        Content = "hello",
-                        PostDate = DateTime.Now
+                        Text = "hello",
+                        PostDate = DateTime.Now,
+                        Author = "xd"
                     },
 
                     new PostDto
                     {
-                        Content = "czemuja",
-                        PostDate = DateTime.Now
+                        Text = "czemuja",
+                        PostDate = DateTime.Now,
+                        Author = "lol"
                     }
                 );
                 context.SaveChanges();

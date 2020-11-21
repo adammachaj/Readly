@@ -19,12 +19,11 @@ namespace Readly.Controllers
             _context = context;
         }
 
+        // GET: GetPosts
         [Route("posts")]
         [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
-        public ActionResult Posts()
+        public ActionResult GetPosts()
         {
-            Console.WriteLine("yo");
-            Console.WriteLine(_context.Post.ToList());
             return Json(_context.Post.ToList());
         }
 
@@ -33,9 +32,6 @@ namespace Readly.Controllers
         {
             return View(await _context.Post.ToListAsync());
         }
-
-        [Route("posts")]
-        [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
 
         // GET: PostDtos/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -66,7 +62,7 @@ namespace Readly.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Content,Date")] PostDto postDto)
+        public async Task<IActionResult> Create([Bind("Id,Text,Author,PostDate")] PostDto postDto)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +94,7 @@ namespace Readly.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Content,Date")] PostDto postDto)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Text,Author,PostDate")] PostDto postDto)
         {
             if (id != postDto.Id)
             {
