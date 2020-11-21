@@ -11,6 +11,7 @@ namespace Readly.Models
         public int Id { get; set; }
         public string Text { get; set; }
         public string Author { get; set; }
+        public int Likes { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime PostDate { get; set; }
