@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace Readly.Models
 {
-    public class UserDto
+    public class User
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Handle { get; set; }
-        public List<PostDto> Posts { get; set; }
-}
+        public List<Post> Posts { get; set; }
+    }
 }

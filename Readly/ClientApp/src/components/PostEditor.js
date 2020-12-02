@@ -14,6 +14,26 @@ export class PostEditor extends Component {
     this.debug = this.debug.bind(this)
   }
 
+  handleSave = (event) => {
+
+    this.editor.save().then((outputData) => {
+      console.log('Article data: ', outputData)
+    }).catch((error) => {
+      console.log('Saving failed: ', error)
+    });
+
+    fetch('/createpost', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          text: this.outputData,
+          author: 'bimsalabim'
+          })
+      });
+
+    event.preventDefault();
+}
+
   debug() {
     // let saveBtn = document.getElementsByClassName('btn');
     // console.log("asd");
@@ -30,7 +50,7 @@ export class PostEditor extends Component {
         <div>
             <h1>Post Editor</h1>
             <div id="editorjs"></div>
-            <button class="btn" onClick={this.debug}>Save Article</button>
+            <button class="btn" onClick={this.handleSave}>Save Article</button>
         </div>
     );
   }

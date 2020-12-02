@@ -10,11 +10,11 @@ using Readly.Models;
 
 namespace Readly.Controllers
 {
-    public class UserDtosController : Controller
+    public class UsersController : Controller
     {
-        private readonly UserDtoContext _context;
+        private readonly UserContext _context;
 
-        public UserDtosController(UserDtoContext context)
+        public UsersController(UserContext context)
         {
             _context = context;
         }
@@ -54,7 +54,7 @@ namespace Readly.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Handle")] UserDto userDto)
+        public async Task<IActionResult> Create([Bind("Id,Name,Handle")] User userDto)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace Readly.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Handle")] UserDto userDto)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Handle")] User userDto)
         {
             if (id != userDto.Id)
             {

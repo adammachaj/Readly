@@ -10,13 +10,47 @@ using Readly.Models;
 
 namespace Readly.Controllers
 {
-    public class PostDtosController : Controller
+    public class PostsController : Controller
     {
-        private readonly PostDtoContext _context;
+        private readonly PostContext _context;
 
-        public PostDtosController(PostDtoContext context)
+        public PostsController(PostContext context)
         {
             _context = context;
+        }
+
+        //[HttpPost]
+        //public ActionResult UploadPost(JsonResult content)
+        //{
+        //    _context.Add
+        //}
+
+        // POST: PostDtos/Create
+        //public async Task<IActionResult> Create([Bind("Id,Text,Author")] PostDto postDto)
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [Route("createpost")]
+        public async Task<IActionResult> CreatePost([FromBody] Post postDto)
+        {
+            //PostDto postDto = new PostDto();
+            //postDto.Text = Txt;
+            //postDto.Author = Auth;
+
+            //Console.WriteLine(Txt);
+            //Console.WriteLine(Auth);
+
+            //if (ModelState.IsValid)
+            //{
+
+                _context.Add(postDto);
+                await _context.SaveChangesAsync();
+                //return RedirectToAction(nameof(Index));
+            //}
+
+            //return Json(Txt);
+            return Json(postDto);
+            //return View(postDto);
         }
 
         // GET: GetPosts
@@ -51,28 +85,6 @@ namespace Readly.Controllers
             return View(postDto);
         }
 
-        // GET: PostDtos/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: PostDtos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Text,Author,PostDate")] PostDto postDto)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(postDto);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(postDto);
-        }
-
         // GET: PostDtos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -94,7 +106,7 @@ namespace Readly.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Text,Author,PostDate")] PostDto postDto)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Text,Author,PostDate")] Post postDto)
         {
             if (id != postDto.Id)
             {

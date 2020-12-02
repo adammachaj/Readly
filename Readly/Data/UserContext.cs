@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Readly.Data
 {
-    public class UserDtoContext : DbContext
+    public class UserContext : DbContext
     {
-        public UserDtoContext(DbContextOptions<UserDtoContext> options)
+        public UserContext(DbContextOptions<UserContext> options)
     : base(options)
         {
         }
 
-        public DbSet<UserDto> User { get; set; }
+        public DbSet<User> User { get; set; }
     }
 }

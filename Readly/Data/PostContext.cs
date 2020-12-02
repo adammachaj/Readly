@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Readly.Data
 {
-    public class PostDtoContext : DbContext
+    public class PostContext : DbContext
     {
-        public PostDtoContext(DbContextOptions<PostDtoContext> options)
+        public PostContext(DbContextOptions<PostContext> options)
     : base(options)
         {
         }
 
-        public DbSet<PostDto> Post { get; set; }
+        public DbSet<Post> Post { get; set; }
     }
 }
