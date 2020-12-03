@@ -17,7 +17,9 @@ export class PostEditor extends Component {
   handleSave = (event) => {
 
     this.editor.save().then((outputData) => {
-      console.log('Article data: ', outputData)
+      console.log('Article data: ', outputData.blocks)
+      console.log('type: ', typeof((outputData)))
+      console.log('content: ', JSON.stringify(outputData))
     }).catch((error) => {
       console.log('Saving failed: ', error)
     });
@@ -26,8 +28,8 @@ export class PostEditor extends Component {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          text: this.outputData,
-          author: 'bimsalabim'
+          "Content" : JSON.stringify(this.outputData),
+          "Author" : "asd"
           })
       });
 

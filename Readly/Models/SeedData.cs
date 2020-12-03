@@ -4,6 +4,7 @@ using Readly.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Readly.Models
@@ -12,9 +13,9 @@ namespace Readly.Models
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            using (var context = new PostDtoContext(
+            using (var context = new PostContext(
                 serviceProvider.GetRequiredService<
-                    DbContextOptions<PostDtoContext>>()))
+                    DbContextOptions<PostContext>>()))
             {
                 // Look for any movies.
                 if (context.Post.Any())
@@ -23,23 +24,23 @@ namespace Readly.Models
                 }
 
                 context.Post.AddRange(
-                    new PostDto
+                    new Post
                     {
-                        Text = "hejka",
+                        Content = Encoding.ASCII.GetBytes("hejka"),
                         PostDate = DateTime.Now,
                         Author = "AM"
                     },
 
-                    new PostDto
+                    new Post
                     {
-                        Text = "hello",
+                        Content = Encoding.ASCII.GetBytes("hello"),
                         PostDate = DateTime.Now,
                         Author = "xd"
                     },
 
-                    new PostDto
+                    new Post
                     {
-                        Text = "czemuja",
+                        Content = Encoding.ASCII.GetBytes("czemuja"),
                         PostDate = DateTime.Now,
                         Author = "lol"
                     }

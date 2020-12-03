@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -31,8 +32,18 @@ namespace Readly.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Route("createpost")]
-        public async Task<IActionResult> CreatePost([FromBody] Post postDto)
+        public async Task<IActionResult> CreatePost([FromBody] Article postDto)
         {
+            Console.WriteLine("CONTENT: " + postDto.Content);
+
+            var article = new Post {
+                Author = postDto.Author,
+                Content = Encoding.ASCII.GetBytes(postDto.Content),
+                PostDate = DateTime.Now
+            };
+            Console.WriteLine(article.GetType());
+            
+            
             //PostDto postDto = new PostDto();
             //postDto.Text = Txt;
             //postDto.Author = Auth;
@@ -42,8 +53,7 @@ namespace Readly.Controllers
 
             //if (ModelState.IsValid)
             //{
-
-                _context.Add(postDto);
+                _context.Add(article);
                 await _context.SaveChangesAsync();
                 //return RedirectToAction(nameof(Index));
             //}
