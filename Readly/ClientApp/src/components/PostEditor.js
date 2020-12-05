@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import 'draft-js/dist/Draft.css';
 import EditorJs from '@editorjs/editorjs'; 
+import { data } from 'jquery';
 
 export class PostEditor extends Component {
 
@@ -17,21 +18,17 @@ export class PostEditor extends Component {
   handleSave = (event) => {
 
     this.editor.save().then((outputData) => {
-      console.log('Article data: ', outputData.blocks)
-      console.log('type: ', typeof((outputData)))
-      console.log('content: ', JSON.stringify(outputData))
+      fetch('/createpost', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(outputData)
+    }).then(r=>r.json).then(d=>console.log(d));
+
+      var content = JSON.stringify(this.outputData)
+      console.log('oto content: ' , content)
     }).catch((error) => {
       console.log('Saving failed: ', error)
     });
-
-    fetch('/createpost', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          "Content" : JSON.stringify(this.outputData),
-          "Author" : "asd"
-          })
-      });
 
     event.preventDefault();
 }

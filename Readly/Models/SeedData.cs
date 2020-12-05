@@ -26,21 +26,21 @@ namespace Readly.Models
                 context.Post.AddRange(
                     new Post
                     {
-                        Content = Encoding.ASCII.GetBytes("hejka"),
+                        Content = ("hejka"),
                         PostDate = DateTime.Now,
                         Author = "AM"
                     },
 
                     new Post
                     {
-                        Content = Encoding.ASCII.GetBytes("hello"),
+                        Content = ("hello"),
                         PostDate = DateTime.Now,
                         Author = "xd"
                     },
 
                     new Post
                     {
-                        Content = Encoding.ASCII.GetBytes("czemuja"),
+                        Content = ("czemuja"),
                         PostDate = DateTime.Now,
                         Author = "lol"
                     }

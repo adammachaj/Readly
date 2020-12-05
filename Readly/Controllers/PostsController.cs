@@ -32,15 +32,14 @@ namespace Readly.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Route("createpost")]
-        public async Task<IActionResult> CreatePost([FromBody] Article postDto)
+        public async Task<IActionResult> CreatePost([FromBody] Article article)
         {
-            Console.WriteLine("CONTENT: " + postDto.Content);
+            Console.WriteLine("CONTENT: " + article.version);
 
-            var article = new Post {
-                Author = postDto.Author,
-                Content = Encoding.ASCII.GetBytes(postDto.Content),
-                PostDate = DateTime.Now
-            };
+            //var article = new Post {
+            //    Content = (postDto.Content),
+            //    PostDate = DateTime.Now
+            //};
             Console.WriteLine(article.GetType());
             
             
@@ -59,7 +58,7 @@ namespace Readly.Controllers
             //}
 
             //return Json(Txt);
-            return Json(postDto);
+            return Json(article);
             //return View(postDto);
         }
 
