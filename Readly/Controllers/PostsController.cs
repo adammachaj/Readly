@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -34,12 +35,14 @@ namespace Readly.Controllers
         [Route("createpost")]
         public async Task<IActionResult> CreatePost([FromBody] Article article)
         {
-            Console.WriteLine("CONTENT: " + article.version);
+            Console.WriteLine("CONTENT: " + JsonSerializer.Serialize(article));
 
-            //var article = new Post {
-            //    Content = (postDto.Content),
-            //    PostDate = DateTime.Now
-            //};
+            var post = new Post
+            {
+                Content = (JsonSerializer.Serialize(article)),
+                PostDate = DateTime.Now
+            };
+
             Console.WriteLine(article.GetType());
             
             
@@ -52,7 +55,7 @@ namespace Readly.Controllers
 
             //if (ModelState.IsValid)
             //{
-                _context.Add(article);
+                _context.Add(post);
                 await _context.SaveChangesAsync();
                 //return RedirectToAction(nameof(Index));
             //}
@@ -77,6 +80,7 @@ namespace Readly.Controllers
         }
 
         // GET: PostDtos/Details/5
+        [Route("post/details/{id}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -84,14 +88,14 @@ namespace Readly.Controllers
                 return NotFound();
             }
 
-            var postDto = await _context.Post
+            var post = await _context.Post
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (postDto == null)
+            if (post == null)
             {
                 return NotFound();
             }
 
-            return View(postDto);
+            return Json(post);
         }
 
         // GET: PostDtos/Edit/5

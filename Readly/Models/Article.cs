@@ -11,20 +11,20 @@ namespace Readly.Models
         [JsonProperty("time")]
         public double time { get; set; }
         [JsonProperty("blocks")]
-        public List<blocks> blocks { get; set; }
+        public List<Blocks> blocks { get; set; }
         [JsonProperty("version")]
         public string version { get; set; }
     }
 
-    public class blocks
+    public class Blocks
     {
         [JsonProperty("type")]
         public string type { get; set; }
         [JsonProperty("data")]
-        public data data { get; set; }
+        public Data data { get; set; }
     }
 
-    public class data
+    public class Data
     {
         [JsonProperty("text")]
         public string text { get; set; }

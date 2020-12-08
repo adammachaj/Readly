@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
 import 'draft-js/dist/Draft.css';
 import EditorJs from '@editorjs/editorjs'; 
+import Header from '@editorjs/header'; 
+import List from '@editorjs/list'; 
+import Image from '@editorjs/image'; 
+import Embed from '@editorjs/embed'; 
+import Paragraph from '@editorjs/paragraph'; 
+import Quote from '@editorjs/quote'; 
+import CodeTool from '@editorjs/code';
+import Table from '@editorjs/table';
+import Underline from '@editorjs/underline';
 import { data } from 'jquery';
 
 export class PostEditor extends Component {
@@ -9,7 +18,58 @@ export class PostEditor extends Component {
     super(props)
 
     this.editor = new EditorJs({ 
-      holder: 'editorjs'
+      holderId: 'editorjs',
+
+      tools: {
+        header: {
+          class: Header,
+          inlineToolbar: ['link']
+        },
+
+        list: {
+          class: List,
+          inlineToolbar: ['link']
+        },
+
+        underline: {
+          class: Underline,
+          inlineToolbar: true
+        },
+
+        image: {
+          class: Image
+        },
+
+        embed: {
+          class: Embed,
+          config: {
+            services: {
+              youtube: true,
+              coub: true
+            }
+          }
+        },
+
+        quote: {
+          class: Quote,
+          inlineToolbar: true
+        },
+
+        code: {
+          class: CodeTool,
+          inlineToolbar: true
+        },
+
+        table: {
+          class: Table,
+          inlineToolbar: true
+        },
+
+        paragraph: {
+          class: Paragraph,
+          inlineToolbar: true
+        },
+      }
     })
 
     this.debug = this.debug.bind(this)
