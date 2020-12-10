@@ -71,8 +71,6 @@ export class PostEditor extends Component {
         },
       }
     })
-
-    this.debug = this.debug.bind(this)
   }
 
   handleSave = (event) => {
@@ -92,17 +90,6 @@ export class PostEditor extends Component {
 
     event.preventDefault();
 }
-
-  debug() {
-    // let saveBtn = document.getElementsByClassName('btn');
-    // console.log("asd");
-    // console.log(saveBtn);
-    this.editor.save().then((outputData) => {
-      console.log('Article data: ', outputData)
-    }).catch((error) => {
-      console.log('Saving failed: ', error)
-    });
-  }
 
   render() {
     return (
