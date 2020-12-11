@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,11 +7,14 @@ using System.Threading.Tasks;
 
 namespace Readly.Models
 {
-    public class PostDto
+    public class Post
     {
         public int Id { get; set; }
-        public string Text { get; set; }
+
+        public string Content { get; set; }
+
         public string Author { get; set; }
+
         public int Likes { get; set; }
 
         [DataType(DataType.Date)]

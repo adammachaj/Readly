@@ -25,10 +25,10 @@ namespace Readly
 
             services.AddControllersWithViews();
 
-            services.AddDbContext<PostDtoContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("PostDtoContext")));
-            services.AddDbContext<UserDtoContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("PostDtoContext")));
+            services.AddDbContext<PostContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("PostContext")));
+            services.AddDbContext<UserContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("PostContext")));
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,13 +12,57 @@ using Readly.Models;
 
 namespace Readly.Controllers
 {
-    public class PostDtosController : Controller
+    public class PostsController : Controller
     {
-        private readonly PostDtoContext _context;
+        private readonly PostContext _context;
 
-        public PostDtosController(PostDtoContext context)
+        public PostsController(PostContext context)
         {
             _context = context;
+        }
+
+        //[HttpPost]
+        //public ActionResult UploadPost(JsonResult content)
+        //{
+        //    _context.Add
+        //}
+
+        // POST: PostDtos/Create
+        //public async Task<IActionResult> Create([Bind("Id,Text,Author")] PostDto postDto)
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [Route("createpost")]
+        public async Task<IActionResult> CreatePost([FromBody] Article article)
+        {
+            Console.WriteLine("CONTENT: " + JsonSerializer.Serialize(article));
+
+            var post = new Post
+            {
+                Content = (JsonSerializer.Serialize(article)),
+                PostDate = DateTime.Now
+            };
+
+            Console.WriteLine(article.GetType());
+            
+            
+            //PostDto postDto = new PostDto();
+            //postDto.Text = Txt;
+            //postDto.Author = Auth;
+
+            //Console.WriteLine(Txt);
+            //Console.WriteLine(Auth);
+
+            //if (ModelState.IsValid)
+            //{
+                _context.Add(post);
+                await _context.SaveChangesAsync();
+                //return RedirectToAction(nameof(Index));
+            //}
+
+            //return Json(Txt);
+            return Json(article);
+            //return View(postDto);
         }
 
         // GET: GetPosts
@@ -34,6 +80,7 @@ namespace Readly.Controllers
         }
 
         // GET: PostDtos/Details/5
+        [Route("post/details/{id}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -41,36 +88,14 @@ namespace Readly.Controllers
                 return NotFound();
             }
 
-            var postDto = await _context.Post
+            var post = await _context.Post
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (postDto == null)
+            if (post == null)
             {
                 return NotFound();
             }
 
-            return View(postDto);
-        }
-
-        // GET: PostDtos/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: PostDtos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Text,Author,PostDate")] PostDto postDto)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(postDto);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(postDto);
+            return Json(post);
         }
 
         // GET: PostDtos/Edit/5
@@ -94,7 +119,7 @@ namespace Readly.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Text,Author,PostDate")] PostDto postDto)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Text,Author,PostDate")] Post postDto)
         {
             if (id != postDto.Id)
             {
