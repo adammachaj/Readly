@@ -25,8 +25,7 @@ export class FetchData extends Component {
                     {forecasts.map(forecast =>
                         <tr key={forecast.id}>
                             <td>{forecast.id}</td>
-                            <td>{forecast.author}</td>
-
+                            <td>{forecast.data}</td>
                         </tr>
                     )}
                 </tbody>
