@@ -12,3 +12,9 @@ Readly/Readly.sln
 Readly/Readly.csproj.user
 
 Readly/Migrations/
+
+Readly/ClientApp/npm
+
+Readly/ClientApp/src/components/tools.js
+
+Readly/ClientApp/src/components/constants.js
