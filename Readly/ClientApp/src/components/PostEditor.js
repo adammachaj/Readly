@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import 'draft-js/dist/Draft.css';
-import EditorJs from '@editorjs/editorjs'; 
+// import 'draft-js/dist/Draft.css';
+import EditorJS from '@editorjs/editorjs'; 
 import Header from '@editorjs/header'; 
 import List from '@editorjs/list'; 
-import Image from '@editorjs/image'; 
+import ImageTool from '@editorjs/image'; 
+import SimpleImage from '@editorjs/simple-image'; 
 import Embed from '@editorjs/embed'; 
 import Paragraph from '@editorjs/paragraph'; 
 import Quote from '@editorjs/quote'; 
@@ -17,7 +18,7 @@ export class PostEditor extends Component {
   constructor(props) {
     super(props)
 
-    this.editor = new EditorJs({ 
+    this.editor = new EditorJS({ 
       holderId: 'editorjs',
 
       tools: {
@@ -36,8 +37,18 @@ export class PostEditor extends Component {
           inlineToolbar: true
         },
 
+        // image: {
+        //   class: Image
+        // },
+
         image: {
-          class: Image
+          class: ImageTool,
+          config: {
+            endpoints: {
+              byFile: 'http://localhost:8008/uploadFile', // Your backend file uploader endpoint
+              byUrl: 'http://localhost:8008/fetchUrl', // Your endpoint that provides uploading by Url
+            }
+          }
         },
 
         embed: {
@@ -68,7 +79,7 @@ export class PostEditor extends Component {
         paragraph: {
           class: Paragraph,
           inlineToolbar: true
-        },
+        }
       }
     })
   }
