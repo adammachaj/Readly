@@ -8,6 +8,7 @@ import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 import { PostEditor } from './components/PostEditor';
+import { SearchTool } from './components/SearchTool';
 
 import './custom.css'
 
@@ -20,6 +21,7 @@ export default class App extends Component {
         <Route exact path='/' component={Home} />
         <Route path='/counter' component={Counter} />
         <Route path='/create-post' component={PostEditor} />
+        <Route path='/search' component={SearchTool} />
         <AuthorizeRoute path='/fetch-data' component={FetchData} />
         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />
       </Layout>
