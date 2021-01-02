@@ -12,3 +12,12 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+#rcorners1 {
+  border-radius: 25px;
+  background: #56bebe;
+  padding: 20px;
+  margin: 1em;
+  width: 50em;
+  height: 12em;
+}
