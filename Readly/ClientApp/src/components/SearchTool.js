@@ -1,28 +1,35 @@
+import { type } from 'jquery';
 import React, { Component } from 'react';
 import authService from './api-authorization/AuthorizeService'
 
 export class SearchTool extends Component {
-    
 
   constructor(props) {
     super(props);
-    this.state = { forecasts: [], loading: true };
+    this.state = {loading: true, articles: [], lol: [], forecasts: [] };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state.articles = [];
   }
 
-  componentDidMount() {
-    this.populateWeatherData();
+  async populateArticleData() {
+    const token = await authService.getAccessToken();
+    const response = await fetch('https://localhost:5001/posts', {
+      headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
+    });
+    const data = await response.json();
+    this.setState({ articles: data, loading: false, forecasts: data });
   }
 
-    handleSubmit = (event) => {
-        event.preventDefault();
+  handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(document.getElementById("form3Example1").value);
 
-        console.log(document.getElementById("form3Example1").value)
-    };
+    this.populateArticleData();
+  };
 
-  static renderArticles(articles) {
-    return (
+  article = props => 
       <div class="row">
-        {articles.map(forecast =>
+        {props.articles.map(forecast =>
           <div id="rcorners1" class="col">
             <p>{forecast.author}</p>
             <h4><a href="https://localhost:5001/counter">Beautiful css3 buttons with hover effects</a></h4>
@@ -30,14 +37,9 @@ export class SearchTool extends Component {
           </div>
         )}
       </div>
-    ); 
-  }
+  
 
   render() {
-    let contents = this.state.loading
-    ? <p><em>Loading...</em></p>
-    : SearchTool.renderArticles(this.state.forecasts);
-
     return (
       <div>
       <h1 id="tabelLabel" >Weather forecast</h1>
@@ -46,22 +48,20 @@ export class SearchTool extends Component {
           <div class="col">
             <div class="form-outline">
               <input name="Search" type="text" id="form3Example1" class="form-control" />
-              {/* <label class="form-label" for="form3Example1">First name</label> */}
               </div>
             </div>
-          <button type="submit" class="btn btn-primary btn-block mb-4" onClick={this.handleSubmit}>Sign up</button>
+          <button type="submit" class="btn btn-primary btn-block mb-4" onClick={this.handleSubmit}>Search</button>
         </form>
-        {contents}
+        <div class="row">
+          {this.state.articles.map(forecast =>
+            <div id="rcorners1" class="col">
+              <p>{forecast.author}</p>
+              <h4><a href="https://localhost:5001/counter">Beautiful css3 buttons with hover effects</a></h4>
+              <span class="cat">{forecast.postDate}</span>
+            </div>
+          )}
+        </div>
       </div>
     );
-  }
-
-  async populateWeatherData() {
-    const token = await authService.getAccessToken();
-    const response = await fetch('/posts', {
-      headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-    });
-    const data = await response.json();
-    this.setState({ forecasts: data, loading: false });
   }
 }
