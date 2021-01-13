@@ -98,6 +98,24 @@ namespace Readly.Controllers
             return Json(post);
         }
 
+        [Route("post/content/{id}")]
+        public async Task<IActionResult> Content(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var post = await _context.Post
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            return Json(post.Content);
+        }
+
         // GET: PostDtos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

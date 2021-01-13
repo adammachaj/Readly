@@ -9,6 +9,7 @@ export class SearchTool extends Component {
     this.state = {loading: true, articles: [], lol: [], forecasts: [] };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state.articles = [];
+    this.link = "https://localhost:5001/viewer/";
   }
 
   async populateArticleData() {
@@ -29,20 +30,20 @@ export class SearchTool extends Component {
 
   article = props => 
       <div class="row">
-        {props.articles.map(forecast =>
+        {props.articles.map(article =>
           <div id="rcorners1" class="col">
-            <p>{forecast.author}</p>
-            <h4><a href="https://localhost:5001/counter">Beautiful css3 buttons with hover effects</a></h4>
-            <span class="cat">{forecast.postDate}</span>
+            <p>{article.author}</p>
+            {this.link = "https://localhost:5001/viewer/" + article.id}
+            <h4><a href={this.link}>Beautiful css3 buttons with hover effects</a></h4>
+            <span class="cat">{article.postDate}</span>
           </div>
         )}
       </div>
   
-
   render() {
     return (
       <div>
-      <h1 id="tabelLabel" >Weather forecast</h1>
+        <h1 id="tabelLabel" >Weather forecast</h1>
         <h1>Search Tool</h1>
         <form>
           <div class="col">
@@ -53,11 +54,11 @@ export class SearchTool extends Component {
           <button type="submit" class="btn btn-primary btn-block mb-4" onClick={this.handleSubmit}>Search</button>
         </form>
         <div class="row">
-          {this.state.articles.map(forecast =>
+          {this.state.articles.map(article =>
             <div id="rcorners1" class="col">
-              <p>{forecast.author}</p>
-              <h4><a href="https://localhost:5001/counter">Beautiful css3 buttons with hover effects</a></h4>
-              <span class="cat">{forecast.postDate}</span>
+              <p>{article.author}</p>
+              <h4><a href={this.link += article.id}>Beautiful css3 buttons with hover effects</a></h4>
+              <span class="cat">{article.postDate}</span>
             </div>
           )}
         </div>
