@@ -8,19 +8,16 @@ export class PostViewer extends Component {
     
   constructor(props) {
     super(props)
-
-    this.state = {blocks: {}}
+    this.state = {blocks: {}, href : ('post/content/').concat((window.location.href).slice(30, (window.location.href).length))}
   }
 
   async populateWeatherData() {
       const token = await authService.getAccessToken();
-      const response = await fetch('post/content/2034', {
+      const response = await fetch(this.state.href, {
         headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
       this.setState({ blocks: JSON.parse(data)});
-
-      console.log(this.state.blocks);
     }
 
     componentDidMount() {
