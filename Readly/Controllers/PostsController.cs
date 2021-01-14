@@ -116,6 +116,28 @@ namespace Readly.Controllers
             return Json(post.Content);
         }
 
+        [Route("post/search/{criterion}")]
+        public async Task<IActionResult> SearchPost(string? criterion)
+        {
+            if (criterion == null)
+            {
+                return NotFound();
+            }
+
+            var posts = _context.Post.ToList();
+
+            if (posts == null)
+            {
+                return NotFound();
+            }
+
+            var found = from post in posts
+                        where ( post.Content != null && post.Content.Contains(criterion) ) || ( post.Author != null && post.Author.Equals(criterion) )
+                        select post;
+
+            return Json(found);
+        }
+
         // GET: PostDtos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
