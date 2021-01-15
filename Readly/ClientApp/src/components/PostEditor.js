@@ -85,16 +85,20 @@ export class PostEditor extends Component {
   }
 
   handleSave = (event) => {
+    var article = { headline: "test", content: {}}
 
     this.editor.save().then((outputData) => {
-      fetch('/createpost', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(outputData)
-    }).then(r=>r.json).then(d=>console.log(d));
 
-      var content = JSON.stringify(this.outputData)
-      console.log('oto content: ' , content)
+      console.log("title: ", document.getElementById("title").value)
+      article.content = outputData
+      article.headline = document.getElementById("title").value
+
+      fetch("/createpost",{
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(article)
+      })
+
     }).catch((error) => {
       console.log('Saving failed: ', error)
     });
@@ -106,6 +110,18 @@ export class PostEditor extends Component {
     return (
         <div>
             <h1>Post Editor</h1>
+
+            <form>
+              <div class="col">
+                <div class="input-group input-group-lg">
+                  <span class="input-group-text" id="inputGroup-sizing-lg">Title</span>
+                  <input name="Search" type="text" id="title" class="form-control" aria-describedby="inputGroup-sizing-lg" />
+                </div>
+              </div>
+            </form>
+
+              <form name="myForm" action="/action_page.php" onsubmit="return validateForm()" method="post">
+              </form>
             <div id="editorjs"></div>
             <button class="btn" onClick={this.handleSave}>Save Article</button>
         </div>
