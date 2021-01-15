@@ -39,30 +39,15 @@ namespace Readly.Controllers
 
             var post = new Post
             {
-                Content = (JsonSerializer.Serialize(article)),
+                Content = (JsonSerializer.Serialize(article.content)),
+                Headline = (article.headline),
                 PostDate = DateTime.Now
             };
 
-            Console.WriteLine(article.GetType());
-            
-            
-            //PostDto postDto = new PostDto();
-            //postDto.Text = Txt;
-            //postDto.Author = Auth;
+            _context.Add(post);
+            await _context.SaveChangesAsync();
 
-            //Console.WriteLine(Txt);
-            //Console.WriteLine(Auth);
-
-            //if (ModelState.IsValid)
-            //{
-                _context.Add(post);
-                await _context.SaveChangesAsync();
-                //return RedirectToAction(nameof(Index));
-            //}
-
-            //return Json(Txt);
             return Json(article);
-            //return View(postDto);
         }
 
         // GET: GetPosts
