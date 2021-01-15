@@ -6,7 +6,7 @@ export class SearchTool extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {loading: true, articles: [], lol: [], forecasts: [] };
+    this.state = {loading: true, articles: [], lol: [], forecasts: [], value: ""};
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state.articles = [];
     this.link = "https://localhost:5001/viewer/";
@@ -14,7 +14,7 @@ export class SearchTool extends Component {
 
   async populateArticleData() {
     const token = await authService.getAccessToken();
-    const response = await fetch('https://localhost:5001/posts', {
+    const response = await fetch(("https://localhost:5001/post/search/").concat(this.setState.value), {
       headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
     });
     const data = await response.json();
@@ -24,6 +24,8 @@ export class SearchTool extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     console.log(document.getElementById("form3Example1").value);
+
+    this.setState({value: document.getElementById("form3Example1").value})
 
     this.populateArticleData();
   };
