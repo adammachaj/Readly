@@ -8,7 +8,14 @@ namespace Readly.Models
 {
     public class Article
     {
-        [JsonProperty("time")]
+        [JsonProperty("headline")]
+        public string headline { get; set; }
+        [JsonProperty("content")]
+        public Content content { get; set; }
+    }
+
+    public class Content
+    {
         public double time { get; set; }
         [JsonProperty("blocks")]
         public List<Blocks> blocks { get; set; }
