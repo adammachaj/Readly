@@ -12,11 +12,14 @@ import CodeTool from '@editorjs/code';
 import Table from '@editorjs/table';
 import Underline from '@editorjs/underline';
 import { data } from 'jquery';
+import authService from './api-authorization/AuthorizeService'
 
 export class PostEditor extends Component {
 
   constructor(props) {
     super(props)
+
+    this.state = {isAuthenticated: false, userName: null}
 
     this.editor = new EditorJS({ 
       holderId: 'editorjs',
@@ -84,12 +87,27 @@ export class PostEditor extends Component {
     })
   }
 
+  componentDidMount() {
+    this.populateState();
+    this._subscription = authService.subscribe(() => this.populateState());
+  }
+
+  async populateState() {
+    const [isAuthenticated, user] = await Promise.all([authService.isAuthenticated(), authService.getUser()])
+    this.setState({
+        isAuthenticated,
+        userName: user && user.name
+    });
+}
+
   handleSave = (event) => {
-    var article = { headline: "test", content: {}}
+    const { isAuthenticated, userName } = this.state
+    var article = { headline: "test", content: {}, author: userName}
 
     this.editor.save().then((outputData) => {
 
       console.log("title: ", document.getElementById("title").value)
+      console.log("author: ", userName)
       article.content = outputData
       article.headline = document.getElementById("title").value
 
@@ -104,27 +122,22 @@ export class PostEditor extends Component {
     });
 
     event.preventDefault();
-}
+  }
 
   render() {
     return (
-        <div>
-            <h1>Post Editor</h1>
-
-            <form>
-              <div class="col">
+      <div class="editor-background">
+            <form class="form-rounded">
+              <div>
                 <div class="input-group input-group-lg">
                   <span class="input-group-text" id="inputGroup-sizing-lg">Title</span>
                   <input name="Search" type="text" id="title" class="form-control" aria-describedby="inputGroup-sizing-lg" />
                 </div>
               </div>
             </form>
-
-              <form name="myForm" action="/action_page.php" onsubmit="return validateForm()" method="post">
-              </form>
             <div id="editorjs"></div>
-            <button class="btn" onClick={this.handleSave}>Save Article</button>
-        </div>
+            <button class="btn btn-outline-warning" onClick={this.handleSave}>Save Article</button>
+      </div>
     );
   }
 }

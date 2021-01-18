@@ -10,6 +10,8 @@ namespace Readly.Models
     {
         [JsonProperty("headline")]
         public string headline { get; set; }
+        [JsonProperty("author")]
+        public string author { get; set; }
         [JsonProperty("content")]
         public Content content { get; set; }
     }

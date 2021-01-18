@@ -8,7 +8,7 @@ export class PostViewer extends Component {
     
   constructor(props) {
     super(props)
-    this.state = {blocks: {}, href : ('post/content/').concat((window.location.href).slice(30, (window.location.href).length))}
+    this.state = {blocks: {}, href : ('post/content/').concat((window.location.href).slice(30, (window.location.href).length)), isAuthenticated: false, userName: null}
   }
 
   async populateWeatherData() {
@@ -20,14 +20,27 @@ export class PostViewer extends Component {
       this.setState({ blocks: JSON.parse(data)});
     }
 
+  async populateState() {
+      const [isAuthenticated, user] = await Promise.all([authService.isAuthenticated(), authService.getUser()])
+      this.setState({
+          isAuthenticated,
+          userName: user && user.name
+      });
+  }
+
     componentDidMount() {
       this.populateWeatherData();
+
+      this.populateState();
+      this._subscription = authService.subscribe(() => this.populateState());
     }
 
     render() {
+      const { isAuthenticated, userName } = this.state
       return (
         <div>
           <h1>PostViewer</h1>
+          {userName}
           <EditorJs readOnly enableReInitialize data={this.state.blocks} tools={EDITOR_JS_TOOLS}/>
         </div>
       );
